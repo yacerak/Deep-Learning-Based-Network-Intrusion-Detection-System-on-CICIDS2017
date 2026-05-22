@@ -41,21 +41,21 @@ The solution progressively stacks: a preprocessing pipeline → an unsupervised 
 
 The five notebooks form a sequential pipeline where each stage builds on artifacts produced by the previous one. The recommended rename mapping is:
 
-| Original Filename | Recommended Name | Role |
-|---|---|---|
-| `cicids-dataset-processing.ipynb` | `01_cicids2017_data_processing.ipynb` | Data ingestion, EDA, feature engineering, preprocessing, artifact export |
-| `intrusion-detection-with-vae.ipynb` | `02_vae_anomaly_detection.ipynb` | Unsupervised VAE trained on benign-only traffic; binary anomaly detection via reconstruction error |
-| `intrusion-detection-with-vae-lgbm.ipynb` | `03_vae_lgbm_gated_classifier.ipynb` | Two-stage system: VAE gate filters benign traffic, LightGBM handles multi-class attack classification |
-| `hierarchical-vae-lgbm-gated-ids-system.ipynb` | `04_hierarchical_vae_lgbm_gated_ids.ipynb` | Per-class VAE ensemble with a learned meta-gate combining VAE reconstruction and LightGBM posterior |
-| `teacher-student-distillation-with-confidence-based.ipynb` | `05_catboost_mlp_knowledge_distillation.ipynb` | CatBoost teacher trained at full precision; shallow MLP student trained via KL-divergence distillation with confidence-based routing |
+| Filename | Role |
+|---|---|
+| `cicids2017_data_processing.ipynb` | Data ingestion, EDA, feature engineering, preprocessing, artifact export |
+| `vae_anomaly_detection.ipynb` | Unsupervised VAE trained on benign-only traffic; binary anomaly detection via reconstruction error |
+| `vae_lgbm_gated_classifier.ipynb` | Two-stage system: VAE gate filters benign traffic, LightGBM handles multi-class attack classification |
+| `hierarchical_vae_lgbm_gated_ids.ipynb` | Per-class VAE ensemble with a learned meta-gate combining VAE reconstruction and LightGBM posterior |
+| `catboost_mlp_knowledge_distillation.ipynb` | CatBoost teacher trained at full precision; shallow MLP student trained via KL-divergence distillation with confidence-based routing |
 
 ```
 ids-cicids2017/
-├── 01_cicids2017_data_processing.ipynb
-├── 02_vae_anomaly_detection.ipynb
-├── 03_vae_lgbm_gated_classifier.ipynb
-├── 04_hierarchical_vae_lgbm_gated_ids.ipynb
-├── 05_catboost_mlp_knowledge_distillation.ipynb
+├── cicids2017_data_processing.ipynb
+├── vae_anomaly_detection.ipynb
+├── vae_lgbm_gated_classifier.ipynb
+├── hierarchical_vae_lgbm_gated_ids.ipynb
+├── catboost_mlp_knowledge_distillation.ipynb
 └── README.md
 ```
 
@@ -529,15 +529,15 @@ The notebooks use `kagglehub` to download CICIDS-2017 automatically. Alternative
 Execute the notebooks sequentially. Each notebook reads artifacts exported by its predecessor:
 
 ```
-01_cicids2017_data_processing.ipynb
+cicids2017_data_processing.ipynb
         ↓  exports: train/test parquets, scaler, label_encoder, settings.json
-02_vae_anomaly_detection.ipynb
+vae_anomaly_detection.ipynb
         ↓  exports: vae_cicids.keras, vae_threshold.joblib, vae_scaler.joblib
-03_vae_lgbm_gated_classifier.ipynb
+vae_lgbm_gated_classifier.ipynb
         ↓  exports: vae_lgbm_system.joblib
-04_hierarchical_vae_lgbm_gated_ids.ipynb
+hierarchical_vae_lgbm_gated_ids.ipynb
         ↓  exports: hierarchical_system.joblib, per-class VAE weights
-05_catboost_mlp_knowledge_distillation.ipynb
+catboost_mlp_knowledge_distillation.ipynb
         ↓  exports: teacher_catboost.cbm, student_mlp_best.pt,
                     student_temperature.joblib, routing_threshold.joblib
 ```
@@ -574,8 +574,8 @@ If you use this codebase in your research, please cite:
   title     = {Deep Learning–Based Network Intrusion Detection System on CICIDS-2017},
   author    = {Yacer Meftah},
   year      = {2026},
-  note      = {GitHub repository},
-  url       = {https://github.com/yacermeftah/ids-cicids2017}
+  note      = {gh repo clone yacerak/Deep-Learning-Based-Network-Intrusion-Detection-System-on-CICIDS2017},
+  url       = {https://github.com/yacerak/Deep-Learning-Based-Network-Intrusion-Detection-System-on-CICIDS2017.git}
 }
 ```
 
@@ -587,4 +587,4 @@ If you use this codebase in your research, please cite:
 
 ## License
 
-This project is released under the MIT License. See `LICENSE` for details.
+This project is released under the GNU General Public License v3.0 . See `LICENSE` for details.
